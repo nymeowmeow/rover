@@ -81,6 +81,7 @@ class RoverState():
         self.send_pickup = False # Set to True to trigger rock pickup
         # count of how long it has been stuck
         self.stuck = 0
+        self.goleft = 0
 # Initialize our rover 
 Rover = RoverState()
 

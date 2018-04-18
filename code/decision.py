@@ -43,7 +43,7 @@ def decision_step(Rover):
             Rover.throttle = -0.2 if Rover.throttle >= 0 else 1.0
             
             return Rover
-                   
+        
         if Rover.rock_dists is not None and len(Rover.rock_dists) > 0 and Rover.mode == 'forward':
             Rover.nav_angles = Rover.rock_angles
             Rover.nav_dists = Rover.rock_dists
@@ -56,7 +56,7 @@ def decision_step(Rover):
                 Rover.throttle = 0
             Rover.brake = 0
             # Set steering to average angle clipped to the range +/- 15
-            Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
+            Rover.steer = np.clip(np.median(Rover.nav_angles * 180/np.pi), -15, 15)
         elif Rover.mode == 'forward':    
             # Check the extent of navigable terrain
             if len(Rover.nav_angles) >= Rover.stop_forward:  
@@ -69,7 +69,7 @@ def decision_step(Rover):
                     Rover.throttle = 0
                 Rover.brake = 0
                 # Set steering to average angle clipped to the range +/- 15
-                Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
+                Rover.steer = np.clip(np.median(Rover.nav_angles * 180/np.pi), -15, 15)
             # If there's a lack of navigable terrain pixels then go to 'stop' mode
             elif len(Rover.nav_angles) < Rover.stop_forward:
                     # Set mode to "stop" and hit the brakes!
@@ -102,7 +102,7 @@ def decision_step(Rover):
                     # Release the brake
                     Rover.brake = 0
                     # Set steer to mean angle
-                    Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
+                    Rover.steer = np.clip(np.median(Rover.nav_angles * 180/np.pi), -15, 15)
                     Rover.mode = 'forward'
     # Just to make the rover do something 
     # even if no modifications have been made to the code
